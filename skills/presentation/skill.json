@@ -1,0 +1,96 @@
+{
+  "name": "presentation",
+  "version": "1.0.0",
+  "description": "Generate visually appealing PowerPoint presentations with modern themes",
+  "entrypoint": "PRESENTATION.md",
+  "type": "generator",
+  "inputs": {
+    "subject": {
+      "type": "string",
+      "required": true,
+      "source": "orchestrator",
+      "description": "Subject name (auto-received from PROJECT ORGANIZATION)"
+    },
+    "topic": {
+      "type": "string",
+      "required": true,
+      "source": "user",
+      "description": "Specific topic name"
+    },
+    "reference_material": {
+      "type": "mixed",
+      "required": true,
+      "source": "user",
+      "options": ["Material", "Book", "URL", "NOTES skill output", "General"],
+      "description": "Reference material for presentation content"
+    },
+    "number_of_slides": {
+      "type": "integer",
+      "required": false,
+      "source": "user",
+      "description": "Target slide count (auto-determined if not specified)"
+    },
+    "theme": {
+      "type": "enum",
+      "required": false,
+      "source": "user",
+      "options": ["Auto-select", "Professional", "Vibrant", "Dark", "STEM", "Sciences", "Humanities", "Business"],
+      "default": "Auto-select",
+      "description": "Visual theme (auto-selected based on subject if not specified)"
+    }
+  },
+  "outputs": {
+    "format": "pptx",
+    "path_template": "subjects/{subject}/presentations/{topic}/Slides/{topic}.pptx",
+    "metadata": true
+  },
+  "features": [
+    "Modern themes",
+    "Subject-based theme auto-selection",
+    "Diagrams and visuals",
+    "Color highlights",
+    "Professional fonts",
+    "Can reference NOTES skill output"
+  ],
+  "themes": {
+    "stem": {
+      "name": "Modern Tech Blue",
+      "colors": ["#2E5C8A", "#4A90E2", "#FF6B35"]
+    },
+    "sciences": {
+      "name": "Scientific Green",
+      "colors": ["#2D5A27", "#4A8C41", "#FFD700"]
+    },
+    "humanities": {
+      "name": "Classic Warm",
+      "colors": ["#8B4513", "#CD853F", "#DAA520"]
+    },
+    "business": {
+      "name": "Corporate Blue",
+      "colors": ["#1C3D5A", "#4682B4", "#FF8C00"]
+    },
+    "default": {
+      "name": "Modern Minimalist",
+      "colors": ["#2E5C8A", "#6B7B8C", "#E74C3C"]
+    }
+  },
+  "dependencies": {
+    "python": ["python-pptx"],
+    "utils": [
+      "shared/formatters/pptx_formatter.py",
+      "skills/presentation/utils/theme_selector.py",
+      "skills/presentation/utils/slide_generator.py"
+    ]
+  },
+  "constraints": [
+    "Academic tone mandatory",
+    "One concept per slide",
+    "Maximum 5-7 bullets per slide",
+    "No CLO requirements"
+  ],
+  "metadata": {
+    "author": "Educational Material Automation System",
+    "created": "2026-01-11",
+    "tags": ["presentation", "slides", "powerpoint", "pptx", "visual"]
+  }
+}

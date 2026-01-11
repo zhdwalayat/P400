@@ -1,0 +1,98 @@
+{
+  "name": "quiz",
+  "version": "1.0.0",
+  "description": "Generate CLO-aligned assessment quizzes with rubrics using Bloom's Taxonomy",
+  "entrypoint": "QUIZ.md",
+  "type": "generator",
+  "inputs": {
+    "subject": {
+      "type": "string",
+      "required": true,
+      "source": "orchestrator",
+      "description": "Subject name (auto-received from PROJECT ORGANIZATION)"
+    },
+    "topic": {
+      "type": "string",
+      "required": true,
+      "source": "user",
+      "description": "Specific topic name"
+    },
+    "reference_material": {
+      "type": "mixed",
+      "required": true,
+      "source": "user",
+      "options": ["Book", "URL", "NOTES skill output", "Note/Document", "General"],
+      "description": "Reference material for quiz content"
+    },
+    "clos": {
+      "type": "array",
+      "required": true,
+      "source": "user",
+      "description": "Course Learning Outcomes (MANDATORY)",
+      "validation": "At least one CLO required"
+    },
+    "time_duration": {
+      "type": "integer",
+      "required": true,
+      "source": "user",
+      "description": "Duration in minutes"
+    },
+    "total_questions": {
+      "type": "integer",
+      "required": true,
+      "source": "user",
+      "description": "Number of questions"
+    },
+    "complexity_level": {
+      "type": "enum",
+      "required": true,
+      "source": "user",
+      "options": ["Remember", "Understand", "Apply", "Analyze", "Evaluate", "Create", "Mixed"],
+      "description": "Bloom's Taxonomy level(s)"
+    },
+    "question_types": {
+      "type": "array",
+      "required": true,
+      "source": "user",
+      "options": ["Short Answer", "Long Answer", "Problem-Solving", "MCQs"],
+      "default": ["Short Answer", "Long Answer", "Problem-Solving"],
+      "description": "Types of questions (MCQs only if explicitly requested)"
+    }
+  },
+  "outputs": {
+    "format": "docx",
+    "path_template": "subjects/{subject}/quizzes/{topic}/{topic}-quiz.docx",
+    "metadata": true
+  },
+  "features": [
+    "CLO alignment (mandatory)",
+    "Bloom's Taxonomy keywords",
+    "Detailed rubrics",
+    "Multiple question types",
+    "Can reference NOTES skill output"
+  ],
+  "dependencies": {
+    "python": ["python-docx"],
+    "utils": [
+      "shared/formatters/docx_formatter.py",
+      "skills/quiz/utils/bloom_taxonomy.py",
+      "skills/quiz/utils/quiz_generator.py"
+    ]
+  },
+  "constraints": [
+    "CLOs are MANDATORY",
+    "All questions must align to CLOs",
+    "MCQs NOT included by default",
+    "Academic tone mandatory",
+    "Bloom's keywords required"
+  ],
+  "bloom_taxonomy": {
+    "levels": ["Remember", "Understand", "Apply", "Analyze", "Evaluate", "Create"],
+    "keywords_reference": "skills/quiz/utils/bloom_taxonomy.py"
+  },
+  "metadata": {
+    "author": "Educational Material Automation System",
+    "created": "2026-01-11",
+    "tags": ["quiz", "assessment", "clo", "bloom", "rubric", "docx"]
+  }
+}

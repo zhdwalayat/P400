@@ -1,0 +1,73 @@
+{
+  "name": "notes",
+  "version": "1.0.0",
+  "description": "Generate comprehensive, academically-formatted lecture notes for any subject and topic",
+  "entrypoint": "NOTES.md",
+  "type": "generator",
+  "inputs": {
+    "subject": {
+      "type": "string",
+      "required": true,
+      "source": "orchestrator",
+      "description": "Subject name (auto-received from PROJECT ORGANIZATION)"
+    },
+    "topic": {
+      "type": "string",
+      "required": true,
+      "source": "user",
+      "description": "Specific topic name"
+    },
+    "educational_level": {
+      "type": "enum",
+      "required": true,
+      "source": "user",
+      "options": ["Undergraduate", "Graduate", "Advanced"],
+      "description": "Target educational level"
+    },
+    "reference_material": {
+      "type": "mixed",
+      "required": true,
+      "source": "user",
+      "options": ["Book", "URL", "Web search", "Material", "General knowledge"],
+      "description": "Reference material for content generation"
+    },
+    "output_format": {
+      "type": "enum",
+      "required": true,
+      "source": "user",
+      "options": ["PDF", "Markdown"],
+      "default": "PDF",
+      "description": "Output file format"
+    }
+  },
+  "outputs": {
+    "format": ["pdf", "md"],
+    "path_template": "subjects/{subject}/notes/{topic}/{topic}.{format}",
+    "metadata": true
+  },
+  "features": [
+    "Educational level adaptation",
+    "Diagrams and tables",
+    "Academic tone",
+    "Version management",
+    "Web search integration"
+  ],
+  "dependencies": {
+    "python": ["reportlab", "markdown"],
+    "utils": [
+      "shared/formatters/pdf_formatter.py",
+      "shared/formatters/markdown_formatter.py",
+      "skills/notes/utils/notes_generator.py"
+    ]
+  },
+  "constraints": [
+    "Academic tone mandatory",
+    "No CLO requirements",
+    "Content based on educational level"
+  ],
+  "metadata": {
+    "author": "Educational Material Automation System",
+    "created": "2026-01-11",
+    "tags": ["notes", "lecture", "educational", "pdf", "markdown"]
+  }
+}

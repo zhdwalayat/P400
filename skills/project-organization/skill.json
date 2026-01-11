@@ -1,0 +1,42 @@
+{
+  "name": "project-organization",
+  "version": "1.0.0",
+  "description": "Main orchestrator skill for routing user requests to specialized content generation skills (NOTES, QUIZ, PRESENTATION)",
+  "entrypoint": "ORGANIZER.md",
+  "type": "orchestrator",
+  "inputs": {},
+  "outputs": {
+    "type": "routing",
+    "routes_to": ["notes", "quiz", "presentation"]
+  },
+  "workflow": {
+    "options": [
+      {"id": 1, "name": "NOTES", "skills": ["notes"]},
+      {"id": 2, "name": "QUIZ", "skills": ["quiz"]},
+      {"id": 3, "name": "PRESENTATION", "skills": ["presentation"]},
+      {"id": 4, "name": "NOTES + QUIZ", "skills": ["notes", "quiz"], "sequential": true},
+      {"id": 5, "name": "NOTES + PRESENTATION", "skills": ["notes", "presentation"], "sequential": true},
+      {"id": 6, "name": "QUIZ + PRESENTATION", "skills": ["quiz", "presentation"], "sequential": true},
+      {"id": 7, "name": "ALL THREE", "skills": ["notes", "quiz", "presentation"], "sequential": true}
+    ],
+    "subject_collection": true,
+    "completion_monitoring": true
+  },
+  "responsibilities": [
+    "Present options to user (1-7)",
+    "Collect subject name",
+    "Route to specialized skills",
+    "Monitor task completion",
+    "Display completion report"
+  ],
+  "constraints": [
+    "Never generate content directly",
+    "Only routes and monitors",
+    "One subject per session"
+  ],
+  "metadata": {
+    "author": "Educational Material Automation System",
+    "created": "2026-01-11",
+    "tags": ["orchestrator", "workflow", "routing"]
+  }
+}
